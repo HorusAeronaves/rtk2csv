@@ -1,6 +1,8 @@
 TARGET = RTK2CSV
 
-CONFIG += c++14
+CONFIG += \
+	c++14 \
+	static
 
 QT += core gui widgets
 
