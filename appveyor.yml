@@ -34,7 +34,7 @@ build_script:
   - '%make%'
   - pwd
   - ls
-  - Get-ChildItem -Filter CopyForBuild* -Include *.exe -Recurse
+  - find . -type f -name '*.exe' | sed 's|.*\.||' | sort -u
 
 artifacts:
   - path: $(configuration)\RTK2CSV.exe
