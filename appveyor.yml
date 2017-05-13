@@ -51,7 +51,7 @@ after_build:
   - mkdir deploy
   - copy %APPVEYOR_BUILD_FOLDER%-build\%CONFIGURATION%\RTK2CSV.exe deploy\RTK2CSV.exe
   #- mklink %APPVEYOR_BUILD_FOLDER%\RTK2CSV.exe %APPVEYOR_BUILD_FOLDER%-build\%CONFIGURATION%\RTK2CSV.exe
-  - windeployqt --release deploy/RTK2CSV.exe
+  - windeployqt --release --compiler-runtime deploy/RTK2CSV.exe
   - 7z a -tzip HORUS_RTK2CSV.zip deploy -r
   - copy %APPVEYOR_BUILD_FOLDER%-build\HORUS_RTK2CSV.zip %APPVEYOR_BUILD_FOLDER%\HORUS_RTK2CSV.zip
   - pwd
