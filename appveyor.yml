@@ -8,7 +8,9 @@ install:
 
 before_build:
   - mkdir %CONFIGURATION%
-  - qmake rtk2csv.pro CONFIG+=static %CONFIGURATION%
+  - ls
+  - qmake rtk2csv.pro CONFIG+=%CONFIGURATION% -o %CONFIGURATION%
+  - ls
 
 build_script:
   - mingw32-make
