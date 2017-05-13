@@ -43,5 +43,6 @@ after_build:
 
 artifacts:
   #- path: ..\$(appveyor_build_folder)-build\$(configuration)\RTK2CSV.exe
-  - path: $(configuration)\RTK2CSV.exe
+  #- path: $(configuration)\RTK2CSV.exe
+  - path: RTK2CSV.exe
     name: RTK2CSV
