@@ -5,9 +5,9 @@ init:
 - ps: Update-AppveyorBuild -Version ("{0}-{1}-{2}" -f $env:appveyor_repo_branch,$env:appveyor_build_number,$commit )
 
 environment:
-  VSVER: 14.0 # Visual Studio 2015
+  VSVER: 15.0 # Visual Studio 2015
   matrix:
-    - MSVC_VERSION: 14.0
+    - MSVC_VERSION: 15.0
       RUNTIME_LINKAGE: static
       QT_VERSION: 5.7
       QT_LINKAGE: static
