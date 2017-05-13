@@ -34,7 +34,8 @@ build_script:
   - '%make%'
   - pwd
   - ls
+  - Get-ChildItem -Filter CopyForBuild* -Include *.exe -Recurse
 
 artifacts:
-  - path: rtk2csv\$(configuration)\RTK2CSV.exe
+  - path: $(configuration)\RTK2CSV.exe
     name: RTK2CSV
