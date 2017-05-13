@@ -9,15 +9,10 @@ install:
 before_build:
   - mkdir output
   - ls
-  - qmake rtk2csv.pro CONFIG+=%CONFIGURATION -o output
+  - qmake rtk2csv.pro CONFIG+=%CONFIGURATION
   - ls
 
 build_script:
-  - ls
-  - pwd
-  - cd output
-  - ls
-  - pwd
   - mingw32-make
   - mingw32-make check
   - dir /b /s *.exe
@@ -26,6 +21,7 @@ after_build:
   #- cmd: copy README.md src\release\README.txt
   #- cmd: copy LICENSE src\release\LICENSE.txt
   - pwd
+  - ls
   - windeployqt --release --compiler-runtime %CONFIGURATION%/RTK2CSV.exe
   - 7z a -tzip HORUS_RTK2CSV.zip %CONFIGURATION%/* -r
   #- copy %APPVEYOR_BUILD_FOLDER%-build\HORUS_RTK2CSV.zip %APPVEYOR_BUILD_FOLDER%\HORUS_RTK2CSV.zip
