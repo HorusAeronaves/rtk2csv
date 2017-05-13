@@ -5,6 +5,7 @@ init:
   - ps: Update-AppveyorBuild -Version ("{0}-{1}-{2}" -f $env:appveyor_repo_branch,$env:appveyor_build_number,$env:commit )
 
 environment:
+  COMMIT_: $env:appveyor_repo_commit.SubString(0,7)
   VSVER: 14.0
   matrix:
     - MSVC_VERSION: 15
@@ -51,7 +52,8 @@ after_build:
   - 7z a -tzip HORUS_RTK2CSV_%GIT_HASH%.zip deploy -r
   - copy %APPVEYOR_BUILD_FOLDER%-build\HORUS_RTK2CSV_%GIT_HASH%.zip %APPVEYOR_BUILD_FOLDER%\HORUS_RTK2CSV_%GIT_HASH%.zip
   - dir /b /s *.zip
-  - echo $commit
+  - echo %commit%
+  - echo %COMMIT_%
 
 artifacts:
   - path: HORUS_RTK2CSV_%GIT_HASH%.zip
