@@ -7,6 +7,7 @@ install:
   - set PATH=%QTDIR%\bin;C:\Qt\Tools\mingw530_32\bin;%PATH%;
 
 before_build:
+  - if %CONFIGURATION%==Debug ( set CONFIG=debug ) else set CONFIG=release
   - mkdir output
   - ls
   - qmake rtk2csv.pro CONFIG+=%CONFIGURATION%
@@ -22,8 +23,8 @@ after_build:
   #- cmd: copy LICENSE src\release\LICENSE.txt
   - pwd
   - ls
-  - windeployqt --%CONFIGURATION% --compiler-runtime %CONFIGURATION%/RTK2CSV.exe
-  - 7z a -tzip HORUS_RTK2CSV.zip %CONFIGURATION%/* -r
+  - windeployqt --%CONFIG% --compiler-runtime %CONFIG%/RTK2CSV.exe
+  - 7z a -tzip HORUS_RTK2CSV.zip %CONFIG%/* -r
   #- copy %APPVEYOR_BUILD_FOLDER%-build\HORUS_RTK2CSV.zip %APPVEYOR_BUILD_FOLDER%\HORUS_RTK2CSV.zip
   - pwd
   - ls
