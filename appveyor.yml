@@ -1,11 +1,17 @@
+configuration:
+  - debug
+  - release
+
 install:
   - set QTDIR=C:\Qt\5.8\mingw53_32
   - set PATH=%QTDIR%\bin;C:\Qt\Tools\mingw530_32\bin;%PATH%;
+
 build_script:
-  - qmake rtk2csv.pro CONFIG+=static
+  - qmake rtk2csv.pro CONFIG+=static %CONFIGURATION%
   - mingw32-make
   - mingw32-make check
   - dir /b /s *.exe
+
 after_build:
   #- cmd: copy README.md src\release\README.txt
   #- cmd: copy LICENSE src\release\LICENSE.txt
@@ -16,6 +22,7 @@ after_build:
   - pwd
   - ls
   - dir /b /s *.zip
+
 artifacts:
   - path: HORUS_RTK2CSV.zip
     name: RTK2CSV
