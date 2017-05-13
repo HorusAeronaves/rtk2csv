@@ -6,9 +6,16 @@ build_script:
   - mingw32-make
   - mingw32-make check
   - dir /b /s *.exe
-#after_build:
+after_build:
   #- cmd: copy README.md src\release\README.txt
   #- cmd: copy LICENSE src\release\LICENSE.txt
+  - pwd
+  - windeployqt --release --compiler-runtime %CONFIGURATION%/RTK2CSV.exe
+  - 7z a -tzip HORUS_RTK2CSV.zip %CONFIGURATION%/* -r
+  #- copy %APPVEYOR_BUILD_FOLDER%-build\HORUS_RTK2CSV.zip %APPVEYOR_BUILD_FOLDER%\HORUS_RTK2CSV.zip
+  - pwd
+  - ls
+  - dir /b /s *.zip
 artifacts:
-  - path: Output\rtk2csv-*.exe
-  - path: src\release\rtk2csv.exe
+  - path: HORUS_RTK2CSV.zip
+    name: RTK2CSV
