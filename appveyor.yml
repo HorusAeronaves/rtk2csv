@@ -13,6 +13,9 @@ before_build:
   - ls
 
 build_script:
+  - cd %CONFIGURATION%
+  - ls
+  - pwd
   - mingw32-make
   - mingw32-make check
   - dir /b /s *.exe
