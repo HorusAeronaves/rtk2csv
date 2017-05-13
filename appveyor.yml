@@ -15,7 +15,7 @@ before_build:
 build_script:
   - ls
   - pwd
-  - cd %output%
+  - cd output
   - ls
   - pwd
   - mingw32-make
