@@ -27,7 +27,7 @@ install:
 before_build:
   # Prepare the out-of-source build directory.
   - mkdir build
-  - qmake -o build -r -Wall -Wlogic -Wparser CONFIG+=%CONFIGURATION% rtk2csv
+  - qmake -o build -r -Wall -Wlogic -Wparser CONFIG+=%CONFIGURATION% build
 
 build_script:
   - cd build
