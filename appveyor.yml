@@ -34,7 +34,7 @@ build_script:
   - '%make%'
   - pwd
   - ls
-  - find . -type f -name '*.exe' | sed 's|.*\.||' | sort -u
+  - dir /b /s *.exe
 
 artifacts:
   - path: $(configuration)\RTK2CSV.exe
