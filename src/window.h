@@ -1,5 +1,8 @@
 #pragma once
 
+#include <QtCharts>
+
+#include <QLineSeries>
 #include <QMainWindow>
 #include <QWidget>
 
@@ -31,4 +34,5 @@ private:
     static QString jpgFormat;
     QList<QVector3D> _listVec;
     uint _photoIndex;
+    QLineSeries *_series;
 };

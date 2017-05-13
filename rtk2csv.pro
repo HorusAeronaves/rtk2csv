@@ -4,7 +4,7 @@ CONFIG += \
     c++14 \
     static
 
-QT += core gui widgets
+QT += core gui widgets charts
 
 HEADERS += \
     src/window.h

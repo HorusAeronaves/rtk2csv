@@ -1,3 +1,7 @@
+#include <QtCharts>
+
+#include <QChart>
+#include <QChartView>
 #include <QDebug>
 #include <QDir>
 #include <QFileDialog>
@@ -28,6 +32,15 @@ Window::Window(QWidget *parent) :
     connect(ui->imgButton, &QPushButton::clicked, this, &Window::imgClicked);
     connect(ui->convertButton, &QPushButton::clicked, this, &Window::convertClicked);
 
+    _series = new QLineSeries();
+    QChart *chart = new QChart();
+    chart->legend()->hide();
+    chart->addSeries(_series);
+    chart->createDefaultAxes();
+    chart->setTitle("Survey");
+    ui->chart->setChart(chart);
+    ui->chart->setRenderHint(QPainter::Antialiasing);
+    _series->clear();
 }
 
 bool Window::checkGpxkmlInput()
@@ -114,13 +127,40 @@ void Window::convertClicked()
         }
         xmlReader.readNext();
     }
+    // Remove base
+    _listVec.removeLast();
+
+    _series->clear();
+    QVector2D maxPoint(0, 0);
+    QVector2D minPoint(0, 0);
+
+    for(const auto vec : _listVec){
+        _series->append(vec.x(), vec.y());
+        if(maxPoint.x() == 0){
+                maxPoint = QVector2D(vec);
+                minPoint = maxPoint;
+        }
+        if(vec.x() > maxPoint.x())
+            maxPoint.setX(vec.x());
+        if(vec.y() > maxPoint.y())
+            maxPoint.setY(vec.y());
+        if(vec.x() < minPoint.x())
+            minPoint.setX(vec.x());
+        if(vec.y() < minPoint.y())
+            minPoint.setY(vec.y());
+    }
     qDebug() << _listVec;
 
     if(xmlReader.hasError()) {
         QMessageBox::critical(this, tr("{%1} Parse Error").arg(gpxkmlFile.absoluteFilePath()), xmlReader.errorString(), QMessageBox::Ok);
         return;
     }
-
+    qDebug() << "serie" << _series->points();
+    qDebug() << "point" << maxPoint << minPoint;
+    ui->chart->update();
+    ui->chart->chart()->createDefaultAxes();
+    ui->chart->chart()->axisY()->setRange(minPoint.y(), maxPoint.y());
+    ui->chart->chart()->axisX()->setRange(minPoint.x(), maxPoint.x());
     createCSV();
 }
 
