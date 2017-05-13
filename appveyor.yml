@@ -14,7 +14,7 @@ environment:
       ICU_VERSION: 57.1
       ICU_LINKAGE: static
       COVERITY_BUILD_CANDIDATE: True
-      QTDIR: C:\Qt\5.7\msvc2015_64
+      #QTDIR: C:\Qt\5.7\msvc2015_64
 
 configuration:
   - debug
