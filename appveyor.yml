@@ -20,7 +20,7 @@ configuration:
   - release
 
 install:
-  - '%QTDIR%\bin\qtenv2.bat'
+  #- '%QTDIR%\bin\qtenv2.bat'
   - qmake -v
   - set QTDIR
   - if %QTDIR:_64=%==%QTDIR% ( set ARCH=x86 ) else set ARCH=x64
