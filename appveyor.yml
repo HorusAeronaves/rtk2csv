@@ -51,7 +51,7 @@ after_build:
   - 7z a -tzip HORUS_RTK2CSV_%GIT_HASH%.zip deploy -r
   - copy %APPVEYOR_BUILD_FOLDER%-build\HORUS_RTK2CSV_%GIT_HASH%.zip %APPVEYOR_BUILD_FOLDER%\HORUS_RTK2CSV_%GIT_HASH%.zip
   - dir /b /s *.zip
-  - echo $env:commit
+  - echo $commit
 
 artifacts:
   - path: HORUS_RTK2CSV_%GIT_HASH%.zip
