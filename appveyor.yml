@@ -7,12 +7,15 @@ install:
   - set PATH=%QTDIR%\bin;C:\Qt\Tools\mingw530_32\bin;%PATH%;
 
 before_build:
-  - mkdir %CONFIGURATION%
+  #- mkdir %CONFIGURATION%
   - ls
-  - qmake rtk2csv.pro CONFIG+=%CONFIGURATION% -o %CONFIGURATION%
+  - qmake rtk2csv.pro CONFIG+=%CONFIGURATION%
+  #-o %CONFIGURATION%
   - ls
 
 build_script:
+  - ls
+  - pwd
   - cd %CONFIGURATION%
   - ls
   - pwd
