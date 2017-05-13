@@ -5,8 +5,8 @@ init:
 environment:
   VSVER: 14.0 # Visual Studio 2015
   matrix:
-    - QTDIR: C:\Qt\5.7\msvc2015
-    - QTDIR: C:\Qt\5.7\msvc2015_64
+    #- QTDIR: C:\Qt\5.7\msvc2015
+    #- QTDIR: C:\Qt\5.7\msvc2015_64
     - MSVC_VERSION: 14.0
       RUNTIME_LINKAGE: static
       QT_VERSION: 5.7
