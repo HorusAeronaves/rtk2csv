@@ -1,4 +1,4 @@
-version: '{branch}-{build}-$(APPVEYOR_REPO_COMMIT)'
+version: '{branch}-{build}-%APPVEYOR_REPO_COMMIT%'
 
 init:
 
