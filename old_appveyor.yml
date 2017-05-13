@@ -1,0 +1,66 @@
+version: '{branch}-{build}'
+
+init:
+
+environment:
+  VSVER: 14.0 # Visual Studio 2015
+  matrix:
+    #- QTDIR: C:\Qt\5.7\msvc2015
+    #- QTDIR: C:\Qt\5.7\msvc2015_64
+    - MSVC_VERSION: 14.0
+      RUNTIME_LINKAGE: static
+      QT_VERSION: 5.7
+      QT_LINKAGE: static
+      ICU_VERSION: 57.1
+      ICU_LINKAGE: static
+      COVERITY_BUILD_CANDIDATE: True
+      #QTDIR: C:\Qt\5.7\msvc2015_64
+
+configuration:
+  - debug
+  - release
+
+install:
+  - '%QTDIR%\bin\qtenv2.bat'
+  - qmake -v
+  - set QTDIR
+  - if %QTDIR:_64=%==%QTDIR% ( set ARCH=x86 ) else set ARCH=x64
+  - if %QTDIR:msvc=%==%QTDIR% g++ --version
+  - if %QTDIR:msvc=%==%QTDIR% set make=mingw32-make.exe
+  - if %QTDIR:msvc=%==%QTDIR% %make% --version
+  - if not %QTDIR:msvc=%==%QTDIR% call "%ProgramFiles(x86)%\Microsoft Visual Studio %VSVER%\VC\vcvarsall.bat" %ARCH%
+  - if not %QTDIR:msvc=%==%QTDIR% set make=nmake.exe
+  - if not %QTDIR:msvc=%==%QTDIR% %make% /? > nul
+
+before_build:
+  # Prepare the out-of-source build directory.
+  - mkdir %APPVEYOR_BUILD_FOLDER%-build
+  - qmake -o %APPVEYOR_BUILD_FOLDER%-build -r -Wall -Wlogic -Wparser CONFIG+=%CONFIGURATION% %APPVEYOR_BUILD_FOLDER%
+
+build_script:
+  - cd %APPVEYOR_BUILD_FOLDER%-build
+  - '%make%'
+  - pwd
+  - ls
+  - dir /b /s *.exe
+
+after_build:
+  # Add a link to the build output within the source directory. This is needed because AppVeyor does
+  # not support extracting artifacts from out-of-source build directories. See 'artifacts' below.
+  - dir /b /s *.exe
+  - mkdir deploy
+  - copy %APPVEYOR_BUILD_FOLDER%-build\%CONFIGURATION%\RTK2CSV.exe deploy\RTK2CSV.exe
+  #- mklink %APPVEYOR_BUILD_FOLDER%\RTK2CSV.exe %APPVEYOR_BUILD_FOLDER%-build\%CONFIGURATION%\RTK2CSV.exe
+  - windeployqt --release --compiler-runtime deploy/RTK2CSV.exe
+  - 7z a -tzip HORUS_RTK2CSV.zip deploy -r
+  - copy %APPVEYOR_BUILD_FOLDER%-build\HORUS_RTK2CSV.zip %APPVEYOR_BUILD_FOLDER%\HORUS_RTK2CSV.zip
+  - pwd
+  - ls
+  - dir /b /s *.exe
+
+artifacts:
+  #- path: ..\$(appveyor_build_folder)-build\$(configuration)\RTK2CSV.exe
+  #- path: $(configuration)\RTK2CSV.exe
+  #- path: RTK2CSV.exe
+  - path: HORUS_RTK2CSV.zip
+    name: RTK2CSV
