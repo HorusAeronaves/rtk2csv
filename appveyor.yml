@@ -26,11 +26,11 @@ install:
 
 before_build:
   # Prepare the out-of-source build directory.
-  - mkdir %APPVEYOR_BUILD_FOLDER%-build
-  - qmake -o %APPVEYOR_BUILD_FOLDER%-build -r -Wall -Wlogic -Wparser CONFIG+=%CONFIGURATION% %APPVEYOR_BUILD_FOLDER%
+  - mkdir build
+  - qmake -o build -r -Wall -Wlogic -Wparser CONFIG+=%CONFIGURATION%
 
 build_script:
-  - cd %APPVEYOR_BUILD_FOLDER%-build
+  - cd build
   - '%make%'
   - pwd
   - ls
@@ -39,5 +39,5 @@ build_script:
   - ls
 
 artifacts:
-  - path: %APPVEYOR_BUILD_FOLDER%-build\release\RTK2CSV.exe
+  - path: build\release\RTK2CSV.exe
     name: RTK2CSV
