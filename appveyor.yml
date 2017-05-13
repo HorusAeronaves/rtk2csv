@@ -34,9 +34,6 @@ build_script:
   - '%make%'
   - pwd
   - ls
-  - cd release
-  - pwd
-  - ls
 
 artifacts:
   - path: rtk2csv\$(configuration)\RTK2CSV.exe
