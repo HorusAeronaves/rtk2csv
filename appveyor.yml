@@ -14,6 +14,7 @@ configuration:
 
 install:
   - '%QTDIR%\bin\qtenv2.bat'
+  - qmake -v
   - set QTDIR
   - if %QTDIR:_64=%==%QTDIR% ( set ARCH=x86 ) else set ARCH=x64
   - if %QTDIR:msvc=%==%QTDIR% g++ --version
@@ -23,12 +24,15 @@ install:
   - if not %QTDIR:msvc=%==%QTDIR% set make=nmake.exe
   - if not %QTDIR:msvc=%==%QTDIR% %make% /? > nul
 
+before_build:
+  # Prepare the out-of-source build directory.
+  - mkdir %APPVEYOR_BUILD_FOLDER%-build
+  - qmake -o %APPVEYOR_BUILD_FOLDER%-build -r -Wall -Wlogic -Wparser CONFIG+=%CONFIGURATION% %APPVEYOR_BUILD_FOLDER%
+
 build_script:
-  - mkdir build
-  - cd build
-  - qmake ..
-  - mingw32-make
+  - cd %APPVEYOR_BUILD_FOLDER%-build
+  - '%make%'
 
 artifacts:
-  - path: rtk2csv\build\RTK2CSV.exe
+  - path: rtk2csv\%APPVEYOR_BUILD_FOLDER%-build\release\RTK2CSV.exe
     name: RTK2CSV
