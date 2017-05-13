@@ -34,6 +34,9 @@ build_script:
   - '%make%'
   - pwd
   - ls
+  - cd release
+  - pwd
+  - ls
 
 artifacts:
   - path: rtk2csv\%APPVEYOR_BUILD_FOLDER%-build\release\RTK2CSV.exe
