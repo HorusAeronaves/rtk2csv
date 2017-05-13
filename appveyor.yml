@@ -36,7 +36,12 @@ build_script:
   - ls
   - dir /b /s *.exe
 
+after_build:
+  # Add a link to the build output within the source directory. This is needed because AppVeyor does
+  # not support extracting artifacts from out-of-source build directories. See 'artifacts' below.
+  - mklink %APPVEYOR_BUILD_FOLDER%\RTK2CSV.exe %APPVEYOR_BUILD_FOLDER%-build\%CONFIGURATION%\RTK2CSV.exe
+
 artifacts:
-  - path: ..\$(appveyor_build_folder)-build\$(configuration)\RTK2CSV.exe
-  #- path: C:\projects\rtk2csv-build\$(configuration)\RTK2CSV.exe
+  #- path: ..\$(appveyor_build_folder)-build\$(configuration)\RTK2CSV.exe
+  - path: C:\projects\rtk2csv-build\$(configuration)\RTK2CSV.exe
     name: RTK2CSV
