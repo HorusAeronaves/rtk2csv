@@ -37,6 +37,6 @@ build_script:
   - dir /b /s *.exe
 
 artifacts:
-  #- path: $(configuration)\RTK2CSV.exe
-  - path: C:\projects\rtk2csv-build\$(configuration)\RTK2CSV.exe
+  - path: ..\$(appveyor_build_folder)-build\$(configuration)\RTK2CSV.exe
+  #- path: C:\projects\rtk2csv-build\$(configuration)\RTK2CSV.exe
     name: RTK2CSV
