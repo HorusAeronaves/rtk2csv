@@ -1,6 +1,8 @@
 version: '{branch}-{build}'
 
 init:
+- ps: $commit = $env:appveyor_repo_commit.SubString(0,7)
+- ps: Update-AppveyorBuild -Version ("{0}-{1}-{2}" -f $env:appveyor_repo_branch,$env:appveyor_build_id,$commit )
 
 environment:
   VSVER: 14.0 # Visual Studio 2015
@@ -28,7 +30,6 @@ install:
   - if not %QTDIR:msvc=%==%QTDIR% call "%ProgramFiles(x86)%\Microsoft Visual Studio %VSVER%\VC\vcvarsall.bat" %ARCH%
   - if not %QTDIR:msvc=%==%QTDIR% set make=nmake.exe
   - if not %QTDIR:msvc=%==%QTDIR% %make% /? > nul
-  - $env:GIT_HASH = $env:APPVEYOR_REPO_COMMIT.Substring(0, 10)
 
 before_build:
   # Prepare the out-of-source build directory.
