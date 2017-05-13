@@ -39,5 +39,5 @@ build_script:
   - ls
 
 artifacts:
-  - path: build\release\RTK2CSV.exe
+  - path: %APPVEYOR_BUILD_FOLDER%-build\release\RTK2CSV.exe
     name: RTK2CSV
