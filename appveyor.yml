@@ -8,7 +8,7 @@ build_script:
 #after_build:
   #- cmd: copy README.md src\release\README.txt
   #- cmd: copy LICENSE src\release\LICENSE.txt
-  - iscc rtk2csv.iss
+  - iscc %CONFIGURATION%\rtk2csv.iss
 artifacts:
   - path: Output\rtk2csv-*.exe
   - path: src\release\rtk2csv.exe
