@@ -2,7 +2,7 @@ version: '{branch}-{build}'
 
 init:
 - ps: $commit = $env:appveyor_repo_commit.SubString(0,7)
-- ps: Update-AppveyorBuild -Version ("{0}-{1}-{2}" -f $env:appveyor_repo_branch,$env:appveyor_build_id,$commit )
+- ps: Update-AppveyorBuild -Version ("{0}-{1}-{2}" -f $env:appveyor_repo_branch,$env:appveyor_build_number,$commit )
 
 environment:
   VSVER: 14.0 # Visual Studio 2015
