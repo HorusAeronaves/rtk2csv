@@ -49,7 +49,7 @@ after_build:
   # not support extracting artifacts from out-of-source build directories. See 'artifacts' below.
   - dir /b /s *.exe
   - mkdir deploy
-  - copy C:\projects\%APPVEYOR_BUILD_FOLDER%-build\%CONFIGURATION%\RTK2CSV.exe %APPVEYOR_BUILD_FOLDER%\deploy\RTK2CSV.exe
+  - copy %APPVEYOR_BUILD_FOLDER%-build\%CONFIGURATION%\RTK2CSV.exe %APPVEYOR_BUILD_FOLDER%\deploy\RTK2CSV.exe
   #- mklink %APPVEYOR_BUILD_FOLDER%\RTK2CSV.exe %APPVEYOR_BUILD_FOLDER%-build\%CONFIGURATION%\RTK2CSV.exe
   - windeployqt --release deploy/RTK2CSV.exe
   - 7z a HORUS_%arch%.zip .\deploy\*
