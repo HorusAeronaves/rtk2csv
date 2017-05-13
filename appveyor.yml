@@ -24,8 +24,10 @@ install:
   - if not %QTDIR:msvc=%==%QTDIR% %make% /? > nul
 
 build_script:
-  - '%make%'
-  - dir /s /b
+  - mkdir build
+  - cd build
+  - qmake ..
+  - mingw32-make
 
 artifacts:
   - path: rtk2csv\build\RTK2CSV.exe
