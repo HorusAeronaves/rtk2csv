@@ -58,5 +58,5 @@ artifacts:
   #- path: ..\$(appveyor_build_folder)-build\$(configuration)\RTK2CSV.exe
   #- path: $(configuration)\RTK2CSV.exe
   #- path: RTK2CSV.exe
-  - path: HORUS_$(arch).zip
+  - path: HORUS_RTK2CSV.zip
     name: RTK2CSV
