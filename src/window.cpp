@@ -32,15 +32,18 @@ Window::Window(QWidget *parent) :
     connect(ui->imgButton, &QPushButton::clicked, this, &Window::imgClicked);
     connect(ui->convertButton, &QPushButton::clicked, this, &Window::convertClicked);
 
-    _series = new QLineSeries();
+    _lineSeries = new QLineSeries();
+    _scatterSeries = new QScatterSeries();
     QChart *chart = new QChart();
     chart->legend()->hide();
-    chart->addSeries(_series);
+    chart->addSeries(_lineSeries);
+    chart->addSeries(_scatterSeries);
     chart->createDefaultAxes();
     chart->setTitle("Survey");
     ui->chart->setChart(chart);
     ui->chart->setRenderHint(QPainter::Antialiasing);
-    _series->clear();
+    _lineSeries->clear();
+    _scatterSeries->clear();
 }
 
 bool Window::checkGpxkmlInput()
@@ -130,12 +133,13 @@ void Window::convertClicked()
     // Remove base
     _listVec.removeLast();
 
-    _series->clear();
+    _lineSeries->clear();
+    _scatterSeries->clear();
     QVector2D maxPoint(0, 0);
     QVector2D minPoint(0, 0);
 
     for(const auto vec : _listVec){
-        _series->append(vec.x(), vec.y());
+        _scatterSeries->append(vec.x(), vec.y());
         if(maxPoint.x() == 0){
                 maxPoint = QVector2D(vec);
                 minPoint = maxPoint;
@@ -149,14 +153,17 @@ void Window::convertClicked()
         if(vec.y() < minPoint.y())
             minPoint.setY(vec.y());
     }
+    _lineSeries->append(_scatterSeries->points());
     qDebug() << _listVec;
 
     if(xmlReader.hasError()) {
         QMessageBox::critical(this, tr("{%1} Parse Error").arg(gpxkmlFile.absoluteFilePath()), xmlReader.errorString(), QMessageBox::Ok);
         return;
     }
-    qDebug() << "serie" << _series->points();
+    _scatterSeries->setMarkerSize(10);
+    qDebug() << "serie" << _scatterSeries->points();
     qDebug() << "point" << maxPoint << minPoint;
+    ui->chart->chart()->setTitle(QString("Survey (%0 points)").arg(_scatterSeries->points().size()));
     ui->chart->update();
     ui->chart->chart()->createDefaultAxes();
     ui->chart->chart()->axisY()->setRange(minPoint.y(), maxPoint.y());

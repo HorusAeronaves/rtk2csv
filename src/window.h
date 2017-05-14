@@ -3,6 +3,7 @@
 #include <QtCharts>
 
 #include <QLineSeries>
+#include <QScatterSeries>
 #include <QMainWindow>
 #include <QWidget>
 
@@ -34,5 +35,6 @@ private:
     static QString jpgFormat;
     QList<QVector3D> _listVec;
     uint _photoIndex;
-    QLineSeries *_series;
+    QLineSeries *_lineSeries;
+    QScatterSeries *_scatterSeries;
 };
