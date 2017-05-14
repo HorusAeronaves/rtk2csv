@@ -21,6 +21,7 @@ public:
 
     bool checkGpxkmlInput();
     bool checkImgInput();
+    void updatePlot();
     void convertClicked();
     void gpxkmlClicked();
     void imgClicked();

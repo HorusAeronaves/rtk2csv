@@ -82,12 +82,9 @@ bool Window::checkImgInput()
     return true;
 }
 
-void Window::convertClicked()
+void Window::updatePlot()
 {
-    if(!checkGpxkmlInput() || !checkImgInput()) {
-        return;
-    }
-
+    qDebug() << "Updating Plot";
     QString gpxkmlPath = ui->gpxkmlInput->displayText();
     QFileInfo gpxkmlFile(gpxkmlPath);
     QFile* file = new QFile(gpxkmlFile.absoluteFilePath());
@@ -168,6 +165,14 @@ void Window::convertClicked()
     ui->chart->chart()->createDefaultAxes();
     ui->chart->chart()->axisY()->setRange(minPoint.y(), maxPoint.y());
     ui->chart->chart()->axisX()->setRange(minPoint.x(), maxPoint.x());
+}
+
+void Window::convertClicked()
+{
+    if(!checkGpxkmlInput() || !checkImgInput()) {
+        return;
+    }
+
     createCSV();
 }
 
@@ -178,6 +183,7 @@ void Window::gpxkmlClicked()
         QMessageBox::critical(this, tr("Error"), tr("No file selected !"));
     } else {
         ui->gpxkmlInput->setText(fileName);
+        updatePlot();
     }
 }
 
