@@ -32,7 +32,6 @@ public:
 private:
     Ui::_MainWindow *ui;
     static QString gpxFormat;
-    static QString kmlFormat;
     static QString jpgFormat;
     QList<QVector3D> _listVec;
     uint _photoIndex;

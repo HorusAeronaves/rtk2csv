@@ -14,7 +14,6 @@
 #include "ui_window.h"
 
 QString Window::gpxFormat = ".gpx";
-QString Window::kmlFormat = ".kml";
 QString Window::jpgFormat = ".JPG";
 
 Window::Window(QWidget *parent) :
@@ -55,9 +54,8 @@ bool Window::checkGpxkmlInput()
         return false;
     }
 
-    if(!ui->gpxkmlInput->displayText().endsWith(gpxFormat) \
-            && !ui->gpxkmlInput->displayText().endsWith(kmlFormat)) {
-        QMessageBox::critical(this, tr("Error"), tr("Wrong format, only .gpx and .kml !"));
+    if(!ui->gpxkmlInput->displayText().endsWith(gpxFormat)) {
+        QMessageBox::critical(this, tr("Error"), tr("Wrong format, only .gpx !"));
         return false;
     }
     return true;
@@ -178,7 +176,7 @@ void Window::convertClicked()
 
 void Window::gpxkmlClicked()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Select a .gpx or .kml file"), QDir::currentPath(), QStringLiteral("*.gpx *.kml"));
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Select a .gpx file"), QDir::currentPath(), QStringLiteral("*.gpx"));
     if (fileName.isNull()) {
         QMessageBox::critical(this, tr("Error"), tr("No file selected !"));
     } else {
