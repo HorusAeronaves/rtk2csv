@@ -6,6 +6,8 @@ CONFIG += \
 
 QT += core gui widgets charts
 
+RC_ICONS = icon/icon.ico
+
 HEADERS += \
     src/window.h
 
