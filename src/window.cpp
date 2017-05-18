@@ -213,7 +213,7 @@ void Window::createCSV() {
             }
         }
         for (const auto vec : _listVec) {
-            stream << "img_" + returnIndex() << "," << vec.x() << "," << vec.y() << "," << vec.z() << "\n";
+            stream << "img_" + returnIndex() << "," << d2s(vec.x()) << "," << d2s(vec.y()) << "," << d2s(vec.z()) << "\n";
         }
     }
     file.close();
@@ -246,6 +246,10 @@ QString Window::returnNexIndex() {
         return "0" + index.arg(_photoIndex);
     }
     return index.arg(_photoIndex);
+}
+
+QString Window::d2s(double d) {
+    return QString::number(d, 'f', 10);
 }
 
 Window::~Window()

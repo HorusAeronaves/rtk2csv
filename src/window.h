@@ -37,4 +37,5 @@ private:
     uint _photoIndex;
     QLineSeries *_lineSeries;
     QScatterSeries *_scatterSeries;
+    QString d2s(double d);
 };
