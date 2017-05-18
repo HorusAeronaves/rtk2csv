@@ -7,6 +7,8 @@
 #include <QMainWindow>
 #include <QWidget>
 
+# include "qstring3d.h"
+
 namespace Ui
 {
 class _MainWindow;
@@ -33,7 +35,7 @@ private:
     Ui::_MainWindow *ui;
     static QString gpxFormat;
     static QString jpgFormat;
-    QList<QVector3D> _listVec;
+    QList<QString3D> _listVec;
     uint _photoIndex;
     QLineSeries *_lineSeries;
     QScatterSeries *_scatterSeries;

@@ -74,6 +74,7 @@ bool Window::checkImgInput()
         QMessageBox::critical(this, tr("Error"), tr("Wrong format, only .jpg !"));
         return false;
     }
+
     QString fileName = imgFile.fileName();
     _photoIndex = fileName.mid(fileName.lastIndexOf(".") - 4, 4).toInt();
     qDebug() << "fileName" << _photoIndex << fileName.mid(fileName.lastIndexOf(".") - 4, 4);
@@ -105,20 +106,19 @@ void Window::updatePlot()
                 qDebug() << xmlReader.attributes().value("creator").toString();
             }
             if (xmlReader.name() == "wpt") {
-                QVector3D vec;
-                vec.setY(xmlReader.attributes().value("lat").toDouble());
-                vec.setX(xmlReader.attributes().value("lon").toDouble());
+                QString3D vec;
+                vec.y = xmlReader.attributes().value("lat").toString();
+                vec.x = xmlReader.attributes().value("lon").toString();
 
                 while (!(xmlReader.tokenType() == QXmlStreamReader::EndElement && xmlReader.name() == "wpt"))
                 {
                     if (xmlReader.name() == "ele") {
-                        vec.setZ(xmlReader.readElementText().toDouble());
+                        vec.z = xmlReader.readElementText();
                     }
                     xmlReader.readNext();
                 }
-                qDebug() << vec;
                 _listVec.append(vec);
-                if(qAbs(vec.x()) < 10 && qAbs(vec.y()) < 10) {
+                if(qAbs(vec.x.toDouble()) < 10 && qAbs(vec.y.toDouble()) < 10) {
                     _listVec.removeLast();
                 }
             }
@@ -133,23 +133,22 @@ void Window::updatePlot()
     QVector2D maxPoint(0, 0);
     QVector2D minPoint(0, 0);
 
-    for(const auto vec : _listVec){
-        _scatterSeries->append(vec.x(), vec.y());
+    for(auto vec : _listVec){
+        _scatterSeries->append(vec.toQPointF());
         if(maxPoint.x() == 0){
-                maxPoint = QVector2D(vec);
+                maxPoint = vec.toQVector2D();
                 minPoint = maxPoint;
         }
-        if(vec.x() > maxPoint.x())
-            maxPoint.setX(vec.x());
-        if(vec.y() > maxPoint.y())
-            maxPoint.setY(vec.y());
-        if(vec.x() < minPoint.x())
-            minPoint.setX(vec.x());
-        if(vec.y() < minPoint.y())
-            minPoint.setY(vec.y());
+        if(vec.x.toDouble() > maxPoint.x())
+            maxPoint.setX(vec.x.toDouble());
+        if(vec.y.toDouble() > maxPoint.y())
+            maxPoint.setY(vec.y.toDouble());
+        if(vec.x.toDouble() < minPoint.x())
+            minPoint.setX(vec.x.toDouble());
+        if(vec.y.toDouble() < minPoint.y())
+            minPoint.setY(vec.y.toDouble());
     }
     _lineSeries->append(_scatterSeries->points());
-    qDebug() << _listVec;
 
     if(xmlReader.hasError()) {
         QMessageBox::critical(this, tr("{%1} Parse Error").arg(gpxkmlFile.absoluteFilePath()), xmlReader.errorString(), QMessageBox::Ok);
@@ -212,8 +211,9 @@ void Window::createCSV() {
                 stream << ",";
             }
         }
-        for (const auto vec : _listVec) {
-            stream << "img_" + returnIndex() << "," << d2s(vec.x()) << "," << d2s(vec.y()) << "," << d2s(vec.z()) << "\n";
+        for (auto vec : _listVec) {
+            qDebug() << vec;
+            stream << "img_" + returnIndex() << "," << vec.toCSV() << "\n";
         }
     }
     file.close();
