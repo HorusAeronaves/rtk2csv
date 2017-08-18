@@ -29,7 +29,6 @@ public:
     void imgClicked();
     void createCSV();
     QString returnIndex();
-    QString returnNexIndex();
 
 private:
     Ui::_MainWindow *ui;

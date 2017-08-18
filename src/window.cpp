@@ -233,21 +233,6 @@ QString Window::returnIndex() {
     return index;
 }
 
-QString Window::returnNexIndex() {
-    QString index = "{%1}";
-    _photoIndex += 1;
-    if(_photoIndex < 1e1) {
-        return "000" + index.arg(_photoIndex);
-    }
-    if(_photoIndex < 1e2) {
-        return "00" + index.arg(_photoIndex);
-    }
-    if(_photoIndex < 1e3) {
-        return "0" + index.arg(_photoIndex);
-    }
-    return index.arg(_photoIndex);
-}
-
 QString Window::d2s(double d) {
     return QString::number(d, 'f', 10);
 }
