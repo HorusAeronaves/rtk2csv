@@ -230,6 +230,10 @@ QString Window::returnIndex() {
     }
     index = index.arg(_photoIndex);
     _photoIndex += 1;
+    // Camera don't create 0000
+    if(_photoIndex >= 10000) {
+        _photoIndex = 1;
+    }
     return index;
 }
 
