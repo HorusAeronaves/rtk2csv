@@ -71,8 +71,8 @@ bool Window::checkImgInput()
     }
 
     if(!ui->imgInput->displayText().endsWith(jpgFormat)) {
-        QMessageBox::critical(this, tr("Error"), tr("Wrong format, only .jpg !"));
-        return false;
+        QMessageBox::warning(this, tr("Warning"), tr("No .jpg input, generating GCP file."));
+        return true;
     }
 
     QString fileName = imgFile.fileName();
@@ -196,7 +196,9 @@ void Window::imgClicked()
 
 void Window::createCSV() {
     QStringList row;
-    row << "img" << "lat" << "lon" << "alt";
+    bool haveImage = ui->imgInput->displayText().endsWith(jpgFormat);
+    haveImage ? row << "img" :  row << "gcp";
+    row << "lat" << "lon" << "alt";
 
     QString saveFileName = QFileDialog::getSaveFileName(this, tr("Save Log to file"), "rtk2csv_output.csv");
     QFile file(saveFileName);
@@ -213,7 +215,8 @@ void Window::createCSV() {
         }
         for (auto vec : _listVec) {
             qDebug() << vec;
-            stream << "img_" + returnIndex() << "," << vec.toCSV() << "\n";
+            haveImage ? stream << "img_" : stream << "GCP_";
+            stream << returnIndex() << "," << vec.toCSV() << "\n";
         }
     }
     file.close();
