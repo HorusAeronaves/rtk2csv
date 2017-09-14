@@ -90,7 +90,6 @@ bool Window::checkImgInput()
 
 void Window::updatePlot()
 {
-    qDebug() << "Updating Plot";
     QString gpxkmlPath = ui->gpxkmlInput->displayText();
     QFileInfo gpxkmlFile(gpxkmlPath);
     QFile* file = new QFile(gpxkmlFile.absoluteFilePath());
@@ -162,8 +161,6 @@ void Window::updatePlot()
         return;
     }
     _scatterSeries->setMarkerSize(10);
-    qDebug() << "serie" << _scatterSeries->points();
-    qDebug() << "point" << maxPoint << minPoint;
     ui->chart->chart()->setTitle(QString("Survey (%0 points)").arg(_scatterSeries->points().size()));
     ui->chart->update();
     ui->chart->chart()->createDefaultAxes();
