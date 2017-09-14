@@ -85,6 +85,10 @@ bool Window::checkImgInput()
     rx = QRegExp("^[A-z]{3,5}");
     rx.indexIn(fileName);
     _imagePrefix = rx.capturedTexts()[0];
+
+    QString indexMask = QString("0").repeated(_indexQuantity);
+    _zeroIndexExist = imgFile.absoluteDir().exists(_imagePrefix + indexMask + jpgFormat);
+
     return true;
 }
 
@@ -231,7 +235,7 @@ QString Window::returnIndex() {
     index = indexMask.remove(indexMask.size() - index.size(), index.size()) + index;
     _photoIndex += 1;
     if(_photoIndex >= pow(10, _indexQuantity)) {
-        _photoIndex = 1;
+        _zeroIndexExist ? _photoIndex = 0 : _photoIndex = 1;
     }
     return index;
 }

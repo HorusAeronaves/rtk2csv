@@ -40,5 +40,6 @@ private:
     QString _imagePrefix;
     QLineSeries *_lineSeries;
     QScatterSeries *_scatterSeries;
+    bool _zeroIndexExist;
     QString d2s(double d);
 };
