@@ -10,6 +10,8 @@
 #include <QVector3D>
 #include <QXmlStreamReader>
 
+#include <cmath>
+
 #include "window.h"
 #include "ui_window.h"
 
@@ -76,8 +78,13 @@ bool Window::checkImgInput()
     }
 
     QString fileName = imgFile.fileName();
-    _photoIndex = fileName.mid(fileName.lastIndexOf(".") - 4, 4).toInt();
-    qDebug() << "fileName" << _photoIndex << fileName.mid(fileName.lastIndexOf(".") - 4, 4);
+    QRegExp rx("[0-9]{4,10}");
+    rx.indexIn(fileName);
+    _indexQuantity = rx.capturedTexts()[0].size();
+    _photoIndex = rx.capturedTexts()[0].toInt();
+    rx = QRegExp("^[A-z]{3,5}");
+    rx.indexIn(fileName);
+    _imagePrefix = rx.capturedTexts()[0];
     return true;
 }
 
@@ -214,8 +221,7 @@ void Window::createCSV() {
             }
         }
         for (auto vec : _listVec) {
-            qDebug() << vec;
-            haveImage ? stream << "img_" : stream << "GCP_";
+            haveImage ? stream << _imagePrefix : stream << "GCP_";
             stream << returnIndex() << "," << vec.toCSV() << "\n";
         }
     }
@@ -223,18 +229,11 @@ void Window::createCSV() {
 }
 
 QString Window::returnIndex() {
-    QString index = "%1";
-    if(_photoIndex < 1e1) {
-        index = "000" + index.arg(_photoIndex);
-    } else if(_photoIndex < 1e2) {
-        index = "00" + index.arg(_photoIndex);
-    } else if(_photoIndex < 1e3) {
-        index = "0" + index.arg(_photoIndex);
-    }
-    index = index.arg(_photoIndex);
+    QString index = QString("%1").arg(_photoIndex);
+    QString indexMask = QString("0").repeated(_indexQuantity);
+    index = indexMask.remove(indexMask.size() - index.size(), index.size()) + index;
     _photoIndex += 1;
-    // Camera don't create 0000
-    if(_photoIndex >= 10000) {
+    if(_photoIndex >= pow(10, _indexQuantity)) {
         _photoIndex = 1;
     }
     return index;

@@ -36,6 +36,8 @@ private:
     static QString jpgFormat;
     QList<QString3D> _listVec;
     uint _photoIndex;
+    uint _indexQuantity;
+    QString _imagePrefix;
     QLineSeries *_lineSeries;
     QScatterSeries *_scatterSeries;
     QString d2s(double d);
