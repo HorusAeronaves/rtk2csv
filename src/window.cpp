@@ -215,24 +215,13 @@ void Window::imgClicked()
 }
 
 void Window::createCSV() {
-    QStringList row;
     bool haveImage = ui->imgInput->displayText().endsWith(jpgFormat);
-    haveImage ? row << "img" :  row << "gcp";
-    row << "lat" << "lon" << "alt";
 
     QString saveFileName = QFileDialog::getSaveFileName(this, tr("Save Log to file"), "rtk2csv_output.csv");
     QFile file(saveFileName);
     if (file.open(QIODevice::ReadWrite)) {
         file.resize(0);
         QTextStream stream(&file);
-        for (int index = 0; index < 4; index++) {
-            stream << row[index];
-            if(index == 3) {
-                stream << "\n";
-            } else {
-                stream << ",";
-            }
-        }
         for (auto vec : _listVec) {
             haveImage ? stream << _imagePrefix : stream << "GCP_";
             stream << returnIndex() << "," << vec.toCSV() << "\n";
