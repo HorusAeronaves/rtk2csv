@@ -30,6 +30,9 @@ public:
     void createCSV();
     QString returnIndex();
 
+    QString extractFileIndex(QString fileName);
+    QString extractFilePrefix(QString fileName);
+
 private:
     Ui::_MainWindow *ui;
     static QString gpxFormat;

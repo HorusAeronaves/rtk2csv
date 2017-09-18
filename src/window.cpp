@@ -80,16 +80,28 @@ bool Window::checkImgInput()
     QString fileName = imgFile.fileName();
     QRegExp rx("[0-9]{4,10}");
     rx.indexIn(fileName);
-    _indexQuantity = rx.capturedTexts()[0].size();
-    _photoIndex = rx.capturedTexts()[0].toInt();
-    rx = QRegExp("^[A-z]{3,5}");
-    rx.indexIn(fileName);
-    _imagePrefix = rx.capturedTexts()[0];
+    _indexQuantity = extractFileIndex(fileName).size();
+    _photoIndex = extractFileIndex(fileName).toInt();
+    _imagePrefix = extractFilePrefix(fileName);
 
     QString indexMask = QString("0").repeated(_indexQuantity);
     _zeroIndexExist = imgFile.absoluteDir().exists(_imagePrefix + indexMask + jpgFormat);
 
     return true;
+}
+
+QString Window::extractFileIndex(QString fileName)
+{
+    QRegExp rx("[0-9]{4,10}");
+    rx.indexIn(fileName);
+    return rx.capturedTexts()[0];
+}
+
+QString Window::extractFilePrefix(QString fileName)
+{
+    QRegExp rx("^[A-z]{3,5}");
+    rx.indexIn(fileName);
+    return rx.capturedTexts()[0];
 }
 
 void Window::updatePlot()
