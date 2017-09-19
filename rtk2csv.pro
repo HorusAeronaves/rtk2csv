@@ -4,7 +4,7 @@ CONFIG += \
     c++14 \
     static
 
-QT += core gui widgets charts
+QT += core gui widgets charts testlib
 
 RC_ICONS = icon/icon.ico
 
@@ -12,10 +12,23 @@ FORMS += \
     src/window.ui
 
 HEADERS += \
-    src/window.h
+    src/window.h \
     src/qstring3d.h
 
 SOURCES += \
-    src/main.cpp \
     src/window.cpp \
     src/qstring3d.cpp
+
+test{
+    message(Configuring test build...)
+
+    HEADERS += \
+        src/test.h
+
+    SOURCES += \
+        src/test.cpp
+}
+else{
+    SOURCES += \
+        src/main.cpp
+}

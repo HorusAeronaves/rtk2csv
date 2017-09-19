@@ -32,6 +32,7 @@ public:
 
     QString extractFileIndex(QString fileName);
     QString extractFilePrefix(QString fileName);
+    QString extractFileSufix(QString fileName);
 
 private:
     Ui::_MainWindow *ui;
@@ -41,6 +42,7 @@ private:
     uint _photoIndex;
     uint _indexQuantity;
     QString _imagePrefix;
+    QString _imageSufix;
     QLineSeries *_lineSeries;
     QScatterSeries *_scatterSeries;
     bool _zeroIndexExist;

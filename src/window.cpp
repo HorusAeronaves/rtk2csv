@@ -77,12 +77,11 @@ bool Window::checkImgInput()
         return true;
     }
 
-    QString fileName = imgFile.fileName();
-    QRegExp rx("[0-9]{4,10}");
-    rx.indexIn(fileName);
+    QString fileName = imgFile.fileName().split('.')[0];
     _indexQuantity = extractFileIndex(fileName).size();
     _photoIndex = extractFileIndex(fileName).toInt();
     _imagePrefix = extractFilePrefix(fileName);
+    _imageSufix = extractFileSufix(fileName);
 
     QString indexMask = QString("0").repeated(_indexQuantity);
     _zeroIndexExist = imgFile.absoluteDir().exists(_imagePrefix + indexMask + jpgFormat);
@@ -99,7 +98,14 @@ QString Window::extractFileIndex(QString fileName)
 
 QString Window::extractFilePrefix(QString fileName)
 {
-    QRegExp rx("^[A-z]{3,5}");
+    QRegExp rx("^[A-z]{1,5}");
+    rx.indexIn(fileName);
+    return rx.capturedTexts()[0];
+}
+
+QString Window::extractFileSufix(QString fileName)
+{
+    QRegExp rx("[A-z]{1,9}$");
     rx.indexIn(fileName);
     return rx.capturedTexts()[0];
 }
@@ -224,7 +230,7 @@ void Window::createCSV() {
         QTextStream stream(&file);
         for (auto vec : _listVec) {
             haveImage ? stream << _imagePrefix : stream << "GCP_";
-            stream << returnIndex() << "," << vec.toCSV() << "\n";
+            stream << returnIndex() << _imageSufix << "," << vec.toCSV() << "\n";
         }
     }
     file.close();
