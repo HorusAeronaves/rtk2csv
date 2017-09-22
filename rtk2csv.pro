@@ -4,7 +4,7 @@ CONFIG += \
     c++14 \
     static
 
-QT += core gui widgets charts testlib
+QT += core gui widgets charts
 
 RC_ICONS = icon/icon.ico
 
@@ -21,6 +21,8 @@ SOURCES += \
 
 test{
     message(Configuring test build...)
+
+    QT += testlib
 
     HEADERS += \
         src/test.h
