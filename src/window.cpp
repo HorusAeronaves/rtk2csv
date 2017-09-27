@@ -20,7 +20,9 @@ QString Window::jpgFormat = ".JPG";
 
 Window::Window(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::_MainWindow)
+    ui(new Ui::_MainWindow),
+    _photoIndex(0),
+    _indexQuantity(6)
 {
     ui->setupUi(this);
     ui->gpxkmlInput->setText(QDir::currentPath());
