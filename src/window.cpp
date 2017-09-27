@@ -140,7 +140,7 @@ void Window::updatePlot()
         }
         if (xmlReader.tokenType() == QXmlStreamReader::StartElement) {
             if (xmlReader.name() == "gpx") {
-                qDebug() << xmlReader.attributes().value("creator").toString();
+                //qDebug() << xmlReader.attributes().value("creator").toString();
             }
             if (xmlReader.name() == "wpt") {
                 QString3D vec;
