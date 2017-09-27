@@ -75,7 +75,14 @@ bool Window::checkImgInput()
     }
 
     if(!ui->imgInput->displayText().endsWith(jpgFormat)) {
-        QMessageBox::warning(this, tr("Warning"), tr("No .jpg input, generating GCP file."));
+        QString warningMsg;
+        if (ui->checkGCP->isChecked()) {
+            QMessageBox::warning(this, tr("Warning"),
+            tr("No .jpg input, generating GCP file.\n To generate CSV please, deselect it."));
+        } else {
+            QMessageBox::warning(this, tr("Warning"),
+            tr("No .jpg input, generating CSV file.\n To generate GCP please, select it."));
+        }
         return true;
     }
 
@@ -231,8 +238,14 @@ void Window::createCSV() {
         file.resize(0);
         QTextStream stream(&file);
         for (auto vec : _listVec) {
-            haveImage ? stream << _imagePrefix : stream << "GCP_";
-            stream << returnIndex() << _imageSufix << "," << vec.toCSV() << "\n";
+            if (haveImage) {
+                stream << _imagePrefix << returnIndex() << _imageSufix << ",";
+            } else {
+                if (ui->checkGCP->isChecked()) {
+                    stream << "GCP_" << returnIndex() << ",";
+                }
+            }
+            stream << vec.toCSV() << "\n";
         }
     }
     file.close();
