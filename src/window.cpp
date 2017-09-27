@@ -231,9 +231,9 @@ void Window::imgClicked()
 
 void Window::createCSV() {
     bool haveImage = ui->imgInput->displayText().endsWith(jpgFormat);
-
-    QString saveFileName = QFileDialog::getSaveFileName(this, tr("Save Log to file"), "rtk2csv_output.csv");
+    QString saveFileName = QFileDialog::getSaveFileName(this, tr("Save Log to file"), "rtk2csv_output.csv", "Text Files (*.csv)");
     QFile file(saveFileName);
+    file.link(saveFileName, ".csv");
     if (file.open(QIODevice::ReadWrite)) {
         file.resize(0);
         QTextStream stream(&file);
