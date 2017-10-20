@@ -26,6 +26,9 @@ Window::Window(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    // Add software version
+    this->setWindowTitle(this->windowTitle() + " - " + GIT_VERSION);
+
     connect(ui->gpxkmlInput, &QLineEdit::returnPressed, this, &Window::checkGpxkmlInput);
     connect(ui->imgInput, &QLineEdit::returnPressed, this, &Window::checkImgInput);
 

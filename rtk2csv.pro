@@ -34,3 +34,6 @@ else{
     SOURCES += \
         src/main.cpp
 }
+
+GIT_VERSION = $$system(git --git-dir $$_PRO_FILE_PWD_/.git --work-tree $$PWD describe --always --tags)
+DEFINES += 'GIT_VERSION=\\"$$GIT_VERSION\\"'
