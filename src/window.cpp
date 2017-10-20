@@ -25,8 +25,6 @@ Window::Window(QWidget *parent) :
     _indexQuantity(6)
 {
     ui->setupUi(this);
-    ui->gpxkmlInput->setText(QDir::currentPath());
-    ui->imgInput->setText(QDir::currentPath());
 
     connect(ui->gpxkmlInput, &QLineEdit::returnPressed, this, &Window::checkGpxkmlInput);
     connect(ui->imgInput, &QLineEdit::returnPressed, this, &Window::checkImgInput);
