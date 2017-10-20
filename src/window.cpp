@@ -208,10 +208,11 @@ void Window::convertClicked()
 
 void Window::gpxkmlClicked()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Select a .gpx file"), QDir::currentPath(), QStringLiteral("*.gpx"));
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Select a .gpx file"), findFolder(), QStringLiteral("*.gpx"));
     if (fileName.isNull()) {
         QMessageBox::critical(this, tr("Error"), tr("No file selected !"));
     } else {
+        setfindFolderFromFile(fileName);
         ui->gpxkmlInput->setText(fileName);
         updatePlot();
     }
@@ -219,10 +220,11 @@ void Window::gpxkmlClicked()
 
 void Window::imgClicked()
 {
-    QString fileName = QFileDialog::getOpenFileName(this, tr("Select a .JPG file"), QDir::currentPath(), QStringLiteral("*.JPG"));
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Select a .JPG file"), findFolder(), QStringLiteral("*.JPG"));
     if (fileName.isNull()) {
         QMessageBox::critical(this, tr("Error"), tr("No file selected !"));
     } else {
+        setfindFolderFromFile(fileName);
         ui->imgInput->setText(fileName);
     }
 }
@@ -262,6 +264,16 @@ QString Window::returnIndex() {
 
 QString Window::d2s(double d) {
     return QString::number(d, 'f', 10);
+}
+
+QString Window::findFolder()
+{
+    return _findFolder.isEmpty() ? QDir::homePath() : QDir(_findFolder).absolutePath();
+}
+
+void Window::setfindFolderFromFile(QString fileName)
+{
+    _findFolder = QDir(fileName).absolutePath();
 }
 
 Window::~Window()

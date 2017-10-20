@@ -41,10 +41,13 @@ private:
     QList<QString3D> _listVec;
     uint _photoIndex;
     uint _indexQuantity;
+    QString _findFolder;
     QString _imagePrefix;
     QString _imageSufix;
     QLineSeries *_lineSeries;
     QScatterSeries *_scatterSeries;
     bool _zeroIndexExist;
     QString d2s(double d);
+    QString findFolder();
+    void setfindFolderFromFile(QString fileName);
 };
